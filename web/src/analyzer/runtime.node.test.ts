@@ -86,7 +86,7 @@ describe("analyzer in Pyodide", () => {
 
   it("lists every rule from the registry", () => {
     const catalog = analyzer.rules();
-    expect(catalog.version).toBe("0.1.1");
+    expect(catalog.version).toBe("0.1.2");
     expect(catalog.rules.map((rule) => rule.id)).toEqual(
       Array.from({ length: 16 }, (_, i) => `CD${String(i).padStart(3, "0")}`),
     );

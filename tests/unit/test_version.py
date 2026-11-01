@@ -8,7 +8,7 @@ from compose_guard.cli import main
 
 
 def test_version_constant() -> None:
-    assert __version__ == "0.1.1"
+    assert __version__ == "0.1.2"
 
 
 def test_version_flag(capsys: pytest.CaptureFixture[str]) -> None:

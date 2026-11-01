@@ -5,7 +5,7 @@ problems before they reach production.
 
 [![CI](https://github.com/yagnang-vyas/compose-guard/actions/workflows/ci.yml/badge.svg)](https://github.com/yagnang-vyas/compose-guard/actions/workflows/ci.yml)
 [![Live demo](https://img.shields.io/badge/live%20demo-compose--guard.netlify.app-0f766e)](https://compose-guard.netlify.app/)
-[![PyPI](https://img.shields.io/pypi/v/compose-guard.svg)](https://pypi.org/project/compose-guard/)
+[![PyPI](https://img.shields.io/badge/PyPI-compose--guard-blue)](https://pypi.org/project/compose-guard/)
 
 **[Try it in your browser →](https://compose-guard.netlify.app/playground)** The playground runs
 this exact Python package with Pyodide, so you can lint a Compose file without installing
@@ -296,7 +296,7 @@ $ compose-guard --format json - < compose.yaml
   "schema_version": 1,
   "tool": {
     "name": "compose-guard",
-    "version": "0.1.1"
+    "version": "0.1.2"
   },
   "files": [
     "<stdin>"

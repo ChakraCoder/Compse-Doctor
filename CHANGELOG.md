@@ -6,6 +6,14 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-11-01
+
+### Fixed
+
+- Replaced the dynamic PyPI version badge in the README with a static badge. The dynamic
+  shields.io badge can show “package or version not found” on the PyPI project page itself
+  (especially right after publish), which looked like a broken release.
+
 ## [0.1.1] - 2026-11-01
 
 ### Changed
@@ -43,5 +51,6 @@ All notable changes to this project are documented here. The format follows
 - Insecure and hardened example stacks, CI on Python 3.10–3.13, and a manually triggered SARIF
   upload workflow.
 
+[0.1.2]: https://github.com/yagnang-vyas/compose-guard/releases/tag/v0.1.2
 [0.1.1]: https://github.com/yagnang-vyas/compose-guard/releases/tag/v0.1.1
 [0.1.0]: https://github.com/yagnang-vyas/compose-guard/releases/tag/v0.1.0

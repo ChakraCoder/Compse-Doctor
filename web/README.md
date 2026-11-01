@@ -80,7 +80,7 @@ The repository root has a `netlify.toml`, so no settings need to be entered by h
 
 Or from a terminal with the Netlify CLI: `cd web && npm run build && npx netlify-cli deploy --prod --dir dist`.
 
-After deploying, open `/playground` and confirm the badge shows `compose-guard 0.1.1` and the
+After deploying, open `/playground` and confirm the badge shows `compose-guard 0.1.2` and the
 insecure example reports 27 findings.
 
 ## Limitations
