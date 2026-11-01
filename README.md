@@ -80,7 +80,7 @@ compose-guard --list-rules
 
 ## Sample output
 
-[`examples/insecure/compose.yaml`](examples/insecure/compose.yaml) is a **deliberately insecure**
+[`examples/insecure/compose.yaml`](https://github.com/yagnang-vyas/compose-guard/blob/main/examples/insecure/compose.yaml) is a **deliberately insecure**
 small shop stack (web app, PostgreSQL, Redis, a worker and Adminer) with fake credentials. It
 triggers all 15 rules:
 
@@ -146,7 +146,7 @@ examples/insecure/compose.yaml:58:5 warning CD004 [adminer] Container uses the h
 ```
 <!-- /generated:insecure-output -->
 
-[`examples/hardened/compose.yaml`](examples/hardened/compose.yaml) is the same stack with every
+[`examples/hardened/compose.yaml`](https://github.com/yagnang-vyas/compose-guard/blob/main/examples/hardened/compose.yaml) is the same stack with every
 finding fixed: pinned images, loopback-only ports, secrets from `.env` and Docker secrets,
 healthchecks with `condition: service_healthy`, restart policies, memory limits, no privileged
 settings or host mounts.
@@ -161,8 +161,8 @@ No problems found in 1 file.
 ## Web playground
 
 Live at **[compose-guard.netlify.app](https://compose-guard.netlify.app/)**.
-[`web/`](web/) holds its source: a landing page and a browser playground that runs this exact
-Python package with Pyodide (WebAssembly). Your YAML stays in the browser. See [web/README.md](web/README.md) for the architecture and Netlify deployment.
+[`web/`](https://github.com/yagnang-vyas/compose-guard/tree/main/web) holds its source: a landing page and a browser playground that runs this exact
+Python package with Pyodide (WebAssembly). Your YAML stays in the browser. See [web/README.md](https://github.com/yagnang-vyas/compose-guard/blob/main/web/README.md) for the architecture and Netlify deployment.
 
 ## Rules
 
@@ -270,7 +270,7 @@ jobs:
           category: compose-guard
 ```
 
-This repository's own [SARIF demo workflow](.github/workflows/sarif-demo.yml) does the same for
+This repository's own [SARIF demo workflow](https://github.com/yagnang-vyas/compose-guard/blob/main/.github/workflows/sarif-demo.yml) does the same for
 the insecure example. It only runs when triggered manually, so the example does not create alerts
 on every push.
 
@@ -382,8 +382,8 @@ make check     # ruff, ruff format --check, mypy --strict, pytest with >=90% bra
 make format    # apply formatting and safe lint fixes
 ```
 
-- [SPEC.md](SPEC.md) describes the design (especially the loader) and records every judgment call
-  under "Decisions". [AGENTS.md](AGENTS.md) holds the ground rules for contributors.
+- [SPEC.md](https://github.com/yagnang-vyas/compose-guard/blob/main/SPEC.md) describes the design (especially the loader) and records every judgment call
+  under "Decisions". [AGENTS.md](https://github.com/yagnang-vyas/compose-guard/blob/main/AGENTS.md) holds the ground rules for contributors.
 - Each rule has `tests/fixtures/bad_cdNNN.yaml` and `good_cdNNN.yaml`. Bad fixtures mark expected
   findings with `# expect: CDNNN` and the test checks the exact lines.
 - `UPDATE_GOLDEN=1 pytest` regenerates `tests/golden/insecure.json`;
@@ -394,8 +394,8 @@ make format    # apply formatting and safe lint fixes
 
 1. Run `make check` and `python scripts/update_readme.py` (and
    `python web/scripts/export_snapshot.py` if the rule catalogue changed).
-2. Update [CHANGELOG.md](CHANGELOG.md), bump `__version__` in `src/compose_guard/__init__.py`.
-3. Tag and publish a GitHub Release (`vX.Y.Z`). The [Publish](.github/workflows/publish.yml)
+2. Update [CHANGELOG.md](https://github.com/yagnang-vyas/compose-guard/blob/main/CHANGELOG.md), bump `__version__` in `src/compose_guard/__init__.py`.
+3. Tag and publish a GitHub Release (`vX.Y.Z`). The [Publish](https://github.com/yagnang-vyas/compose-guard/blob/main/.github/workflows/publish.yml)
    workflow builds the sdist/wheel and uploads to PyPI via Trusted Publishing.
 4. On PyPI, configure a Trusted Publisher for this repository (`compose-guard`, workflow
    `publish.yml`, environment `pypi`) before the first release upload.
@@ -410,4 +410,4 @@ make format    # apply formatting and safe lint fixes
 
 ## License
 
-MIT, see [LICENSE](LICENSE).
+MIT, see [LICENSE](https://github.com/yagnang-vyas/compose-guard/blob/main/LICENSE).
