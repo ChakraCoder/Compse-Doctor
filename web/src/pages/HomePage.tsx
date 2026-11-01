@@ -52,7 +52,7 @@ function ProductPreview() {
           <span className="size-2.5 rounded-full bg-line-strong" />
           <span className="size-2.5 rounded-full bg-line-strong" />
         </span>
-        <span className="ml-2 font-mono text-xs text-subtle">compose-doctor compose.yaml</span>
+        <span className="ml-2 font-mono text-xs text-subtle">compose-guard compose.yaml</span>
       </div>
       <div className="grid md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
         <div className="border-b border-line md:border-b-0 md:border-r">
@@ -82,7 +82,7 @@ function ProductPreview() {
         </div>
       </div>
       <figcaption className="border-t border-line bg-surface-2 px-4 py-2.5 text-xs text-subtle">
-        Actual output of Compose Doctor {ANALYZER_VERSION} for this file, generated from the analyzer at
+        Actual output of Compose Guard {ANALYZER_VERSION} for this file, generated from the analyzer at
         build time.
       </figcaption>
     </figure>
@@ -188,17 +188,17 @@ const WORKFLOW = [
   {
     step: "Run it on your Compose file",
     detail: "With no arguments it finds compose.yaml (or docker-compose.yml) in the current directory.",
-    code: "compose-doctor",
+    code: "compose-guard",
   },
   {
     step: "Fix or suppress each finding",
     detail: "Apply the suggested fix, or record a deliberate exception with a reason.",
-    code: "# compose-doctor: ignore CD005 -- only reachable through the VPN",
+    code: "# compose-guard: ignore CD005 -- only reachable through the VPN",
   },
   {
     step: "Gate CI and upload SARIF",
     detail: "Fail the build on warnings and show findings as code scanning alerts.",
-    code: "compose-doctor --fail-on warning --format sarif > compose-doctor.sarif",
+    code: "compose-guard --fail-on warning --format sarif > compose-guard.sarif",
   },
 ];
 
@@ -230,7 +230,7 @@ export function HomePage() {
               Catch Docker Compose issues before they reach production.
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-8 text-muted">
-              Compose Doctor is a command-line linter that finds exposed databases, hard-coded secrets,
+              Compose Guard is a command-line linter that finds exposed databases, hard-coded secrets,
               privileged containers, missing healthchecks and 12 other kinds of problems in your Compose files, and
               tells you the exact line and the fix.
             </p>
@@ -317,15 +317,15 @@ export function HomePage() {
             </ol>
           </div>
           <div id="install">
-            <SectionHeading eyebrow="Installation" title="Install from source">
-              Compose Doctor is not published on PyPI yet. Install it from a clone with Python 3.10 or newer.
+            <SectionHeading eyebrow="Installation" title="Install from PyPI">
+              Python 3.10 or newer. Or clone the repository and run <code className="text-fg">pip install .</code>.
             </SectionHeading>
             <CodeBlock className="mt-8" code={INSTALL_COMMANDS} prompt label="Terminal" />
             <p className="mt-4 flex items-start gap-2 text-sm text-muted">
               <Terminal aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-subtle" />
               <span>
-                <code className="text-fg">python -m compose_doctor</code> works the same as{" "}
-                <code className="text-fg">compose-doctor</code>. See the <Link className="text-accent underline-offset-4 hover:underline" to="/docs">docs</Link> for usage.
+                <code className="text-fg">python -m compose_guard</code> works the same as{" "}
+                <code className="text-fg">compose-guard</code>. See the <Link className="text-accent underline-offset-4 hover:underline" to="/docs">docs</Link> for usage.
               </span>
             </p>
           </div>

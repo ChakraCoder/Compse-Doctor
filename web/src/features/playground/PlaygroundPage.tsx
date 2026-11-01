@@ -15,7 +15,7 @@ import { ResultsPanel, type RunState } from "./ResultsPanel";
 import { type EditorMarker, YamlEditor, type YamlEditorHandle } from "./YamlEditor";
 
 const CATEGORY_ORDER = ["mixed", "security", "reliability", "configuration", "clean"] as const;
-const DRAFT_KEY = "compose-doctor:draft";
+const DRAFT_KEY = "compose-guard:draft";
 const CUSTOM = "custom";
 
 interface Draft {
@@ -44,7 +44,7 @@ function describeOutcome(run: RunState): string {
   if (run.status === "failed") return `Analysis failed: ${run.message}`;
   if (run.status !== "done") return "";
   const { result } = run.outcome;
-  if (!result.ok) return `Compose Doctor could not read the file: ${result.error.message}.`;
+  if (!result.ok) return `Compose Guard could not read the file: ${result.error.message}.`;
   const { summary, findings } = result.report;
   if (findings.length === 0) return "Analysis complete. No problems found.";
   return `Analysis complete. ${findings.length} findings: ${summary.error} errors, ${summary.warning} warnings, ${summary.note} notes.`;
@@ -188,7 +188,7 @@ export default function PlaygroundPage() {
 
   return (
     <div className="mx-auto flex max-w-[1600px] flex-col px-3 pb-4 pt-4 sm:px-5 lg:h-[calc(100dvh-3.5rem)]">
-      <h1 className="sr-only">Compose Doctor playground</h1>
+      <h1 className="sr-only">Compose Guard playground</h1>
       <div className="flex flex-wrap items-center justify-between gap-3 pb-3">
         <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1">
           <p className="text-sm font-semibold tracking-tight text-fg">Playground</p>
@@ -335,7 +335,7 @@ export default function PlaygroundPage() {
 function RuntimeBadge({ runtime }: { runtime: ReturnType<typeof useAnalyzer>["runtime"] }) {
   const label =
     runtime.status === "ready"
-      ? `compose-doctor ${runtime.catalog.version}`
+      ? `compose-guard ${runtime.catalog.version}`
       : runtime.status === "loading"
         ? "Loading analyzer…"
         : "Analyzer unavailable";

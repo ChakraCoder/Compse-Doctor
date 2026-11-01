@@ -9,11 +9,11 @@ from __future__ import annotations
 import re
 from collections.abc import Iterator
 
-from compose_doctor.interpolation import contains_interpolation
-from compose_doctor.model import ComposeFile, Finding, Located, LocatedMap, Service, Severity, Value
-from compose_doctor.rules.base import Rule, mapping, sequence, text
-from compose_doctor.rules.parsing import Invalid, iter_environment, parse_port, parse_volume
-from compose_doctor.rules.reliability import dependencies
+from compose_guard.interpolation import contains_interpolation
+from compose_guard.model import ComposeFile, Finding, Located, LocatedMap, Service, Severity, Value
+from compose_guard.rules.base import Rule, mapping, sequence, text
+from compose_guard.rules.parsing import Invalid, iter_environment, parse_port, parse_volume
+from compose_guard.rules.reliability import dependencies
 
 LIST_KEYS = ("ports", "volumes", "cap_add", "security_opt")
 RESTART_VALUE = re.compile(r"no|always|unless-stopped|on-failure(:\d+)?")

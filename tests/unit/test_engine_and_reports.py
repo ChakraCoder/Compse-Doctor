@@ -6,13 +6,13 @@ from pathlib import Path
 
 import pytest
 
-from compose_doctor.config import Config
-from compose_doctor.engine import Report, Suppression, lint
-from compose_doctor.loader import load_text
-from compose_doctor.model import Severity
-from compose_doctor.report import render
-from compose_doctor.report.sarif import artifact_uri
-from compose_doctor.rules import RULES
+from compose_guard.config import Config
+from compose_guard.engine import Report, Suppression, lint
+from compose_guard.loader import load_text
+from compose_guard.model import Severity
+from compose_guard.report import render
+from compose_guard.report.sarif import artifact_uri
+from compose_guard.rules import RULES
 
 SOURCE = textwrap.dedent(
     """\
@@ -21,12 +21,12 @@ SOURCE = textwrap.dedent(
         image: nginx:1.27
         restart: always
         mem_limit: 64m
-        container_name: web  # compose-doctor: ignore CD015
+        container_name: web  # compose-guard: ignore CD015
         privileged: true
       worker:
         image: worker:1.0
         restart: always
-        # compose-doctor: ignore CD002
+        # compose-guard: ignore CD002
         privileged: true
     """
 )
@@ -113,7 +113,7 @@ def test_text_two_files_plural() -> None:
 def test_json_report_shape() -> None:
     data = json.loads(render(report(), "json"))
     assert data["schema_version"] == 1
-    assert data["tool"] == {"name": "compose-doctor", "version": "0.1.0"}
+    assert data["tool"] == {"name": "compose-guard", "version": "0.1.0"}
     assert data["files"] == ["compose.yaml"]
     assert data["summary"] == {"error": 1, "warning": 0, "note": 1, "suppressed": 2}
     assert data["findings"][0] == {
@@ -146,8 +146,8 @@ def test_sarif_report() -> None:
     assert data["$schema"].endswith("sarif-2.1.0.json")
     (run,) = data["runs"]
     driver = run["tool"]["driver"]
-    assert driver["name"] == "compose-doctor"
-    assert driver["informationUri"] == "https://github.com/yagnang-vyas/compose-doctor"
+    assert driver["name"] == "compose-guard"
+    assert driver["informationUri"] == "https://github.com/yagnang-vyas/compose-guard"
     assert [rule["id"] for rule in driver["rules"]] == [rule.id for rule in RULES]
     assert driver["rules"][9]["name"] == "DependsOnWithoutHealthCondition"
     for rule in driver["rules"]:

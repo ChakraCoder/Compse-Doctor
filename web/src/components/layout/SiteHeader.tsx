@@ -24,7 +24,7 @@ export function Wordmark() {
   return (
     <Link to="/" className="flex items-center gap-2.5 rounded-md font-semibold tracking-tight text-fg">
       <LogoMark className="size-7" />
-      <span className="text-[15px]">Compose Doctor</span>
+      <span className="text-[15px]">Compose Guard</span>
     </Link>
   );
 }

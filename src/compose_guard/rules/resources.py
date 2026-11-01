@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from compose_doctor.model import ComposeFile, Finding, Service, Severity
-from compose_doctor.rules.base import Rule, key, lookup
+from compose_guard.model import ComposeFile, Finding, Service, Severity
+from compose_guard.rules.base import Rule, key, lookup
 
 # --- CD010 ---------------------------------------------------------------------------------
 

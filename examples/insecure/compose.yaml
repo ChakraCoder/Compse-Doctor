@@ -1,4 +1,4 @@
-# A deliberately insecure stack for demonstrating Compose Doctor.
+# A deliberately insecure stack for demonstrating Compose Guard.
 # Every password, token and key below is fake. Do not deploy this file.
 name: shop
 

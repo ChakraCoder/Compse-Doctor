@@ -35,24 +35,24 @@ function rawFormats(run: Extract<RunState, { status: "done" }>): RawFormat[] {
     {
       id: "text",
       label: "Text",
-      command: `compose-doctor compose.yaml${failOn}`,
-      filename: "compose-doctor.txt",
+      command: `compose-guard compose.yaml${failOn}`,
+      filename: "compose-guard.txt",
       mime: "text/plain",
       content: result.text,
     },
     {
       id: "json",
       label: "JSON",
-      command: `compose-doctor compose.yaml --format json --show-suppressed${failOn}`,
-      filename: "compose-doctor.json",
+      command: `compose-guard compose.yaml --format json --show-suppressed${failOn}`,
+      filename: "compose-guard.json",
       mime: "application/json",
       content: result.json,
     },
     {
       id: "sarif",
       label: "SARIF",
-      command: `compose-doctor compose.yaml --format sarif${failOn}`,
-      filename: "compose-doctor.sarif",
+      command: `compose-guard compose.yaml --format sarif${failOn}`,
+      filename: "compose-guard.sarif",
       mime: "application/sarif+json",
       content: result.sarif,
     },
@@ -93,7 +93,7 @@ export function ResultsPanel({ run, runtime, rules, stale, onGoTo, onRetry }: Re
         >
           {booting
             ? "Downloading the Python runtime. This takes a few seconds on the first visit and is cached afterwards."
-            : "Running Compose Doctor on your file."}
+            : "Running Compose Guard on your file."}
         </Placeholder>
       );
     }
@@ -128,7 +128,7 @@ export function ResultsPanel({ run, runtime, rules, stale, onGoTo, onRetry }: Re
           <div className="flex items-start gap-3">
             <FileWarning aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-error" />
             <div className="min-w-0">
-              <p className="font-semibold text-fg">Compose Doctor could not read this file</p>
+              <p className="font-semibold text-fg">Compose Guard could not read this file</p>
               <p className="mt-1 text-sm leading-6 text-muted">
                 {error.message}
                 {error.line !== null && ` (line ${error.line})`}

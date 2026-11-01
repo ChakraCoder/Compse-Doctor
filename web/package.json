@@ -1,8 +1,8 @@
 {
-  "name": "compose-doctor-web",
+  "name": "compose-guard-web",
   "private": true,
   "version": "0.1.0",
-  "description": "Web playground for Compose Doctor that runs the real Python analyzer in the browser with Pyodide.",
+  "description": "Web playground for Compose Guard that runs the real Python analyzer in the browser with Pyodide.",
   "type": "module",
   "license": "MIT",
   "engines": {

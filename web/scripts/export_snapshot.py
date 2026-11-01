@@ -1,7 +1,7 @@
 """Write src/generated/analyzer-snapshot.json from the real analyzer.
 
 The landing and docs pages show the rule catalogue and a sample result without booting the
-in-browser runtime, so they read this snapshot instead. It is produced by running Compose Doctor,
+in-browser runtime, so they read this snapshot instead. It is produced by running Compose Guard,
 never typed by hand, and src/analyzer/runtime.node.test.ts fails when it is stale. Run it from the
 repository root after changing rules or output::
 

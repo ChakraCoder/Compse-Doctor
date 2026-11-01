@@ -1,4 +1,4 @@
-// Installs Compose Doctor into a Pyodide instance and exposes typed calls into bridge.py.
+// Installs Compose Guard into a Pyodide instance and exposes typed calls into bridge.py.
 // Shared by the browser worker and the Node-side tests, so both exercise the same code path.
 
 import type { PyodideAPI } from "pyodide";
@@ -6,7 +6,7 @@ import type { PyodideAPI } from "pyodide";
 import { BRIDGE_MODULE, PYTHON_FILES } from "./sources";
 import type { AnalysisResult, FailOn, RuleCatalog } from "./types";
 
-const IMPORT_ROOT = "/home/pyodide/compose-doctor";
+const IMPORT_ROOT = "/home/pyodide/compose-guard";
 const PYYAML_ROOT = "/home/pyodide/pyyaml";
 
 export interface Analyzer {
@@ -14,7 +14,7 @@ export interface Analyzer {
   rules(): RuleCatalog;
 }
 
-/** The file name findings are reported against, as if the user ran `compose-doctor compose.yaml`. */
+/** The file name findings are reported against, as if the user ran `compose-guard compose.yaml`. */
 export const PLAYGROUND_FILENAME = "compose.yaml";
 
 export function installAnalyzer(

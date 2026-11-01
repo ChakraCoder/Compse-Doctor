@@ -1,6 +1,6 @@
 """Entry point the web playground calls inside Pyodide.
 
-It only wires the unmodified ``compose_doctor`` package together the way ``cli.py`` does for
+It only wires the unmodified ``compose_guard`` package together the way ``cli.py`` does for
 standard input: load the text with ``load_bytes``, lint it with the default configuration and
 render the real JSON, text and SARIF reports. Nothing here reads files, the environment or the
 network, and the input is never executed.
@@ -11,13 +11,13 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from compose_doctor import __version__
-from compose_doctor.config import FAIL_ON_CHOICES, Config
-from compose_doctor.engine import lint
-from compose_doctor.errors import InputError
-from compose_doctor.loader import load_bytes
-from compose_doctor.report import json_report, sarif, text
-from compose_doctor.rules import RULES
+from compose_guard import __version__
+from compose_guard.config import FAIL_ON_CHOICES, Config
+from compose_guard.engine import lint
+from compose_guard.errors import InputError
+from compose_guard.loader import load_bytes
+from compose_guard.report import json_report, sarif, text
+from compose_guard.rules import RULES
 
 EXIT_OK = 0
 EXIT_FINDINGS = 1
@@ -61,7 +61,7 @@ def analyze(source: str, filename: str, fail_on: str) -> str:
             "error": {
                 "message": exc.message,
                 "line": exc.line,
-                "display": f"compose-doctor: error: {exc}",
+                "display": f"compose-guard: error: {exc}",
             },
         }
         return json.dumps(result)

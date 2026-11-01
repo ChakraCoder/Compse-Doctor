@@ -11,9 +11,9 @@ from pathlib import Path
 
 import pytest
 
-from compose_doctor.loader import load_text
-from compose_doctor.model import ComposeFile, Finding, Severity
-from compose_doctor.rules import RULES, RULES_BY_ID, run_rules
+from compose_guard.loader import load_text
+from compose_guard.model import ComposeFile, Finding, Severity
+from compose_guard.rules import RULES, RULES_BY_ID, run_rules
 
 FIXTURES = Path(__file__).parent.parent / "fixtures"
 EXPECT = re.compile(r"#\s*expect:\s*(CD\d{3})")

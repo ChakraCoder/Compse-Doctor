@@ -22,7 +22,7 @@ export function findingKey(finding: Finding): string {
 
 export function FindingItem({ finding, rule, expanded, onToggle, onGoTo, suppression }: FindingItemProps) {
   const id = `finding-${findingKey(finding).replace(/[^\w-]/g, "_")}`;
-  const ignoreComment = `# compose-doctor: ignore ${finding.rule_id} -- <reason>`;
+  const ignoreComment = `# compose-guard: ignore ${finding.rule_id} -- <reason>`;
   return (
     <li className={cn("group", suppression && "opacity-75")}>
       <div className="flex items-start gap-1 px-2 sm:px-3">

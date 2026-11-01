@@ -12,16 +12,16 @@ import { NotFoundPage } from "./pages/NotFoundPage";
 const PlaygroundPage = lazy(() => import("./features/playground/PlaygroundPage"));
 
 const TITLES: Record<string, string> = {
-  "/": "Compose Doctor · Lint Docker Compose files",
-  "/playground": "Playground · Compose Doctor",
-  "/docs": "Docs · Compose Doctor",
-  "/examples": "Examples · Compose Doctor",
+  "/": "Compose Guard · Lint Docker Compose files",
+  "/playground": "Playground · Compose Guard",
+  "/docs": "Docs · Compose Guard",
+  "/examples": "Examples · Compose Guard",
 };
 
 function useRouteEffects() {
   const { pathname, hash } = useLocation();
   useEffect(() => {
-    document.title = TITLES[pathname] ?? "Not found · Compose Doctor";
+    document.title = TITLES[pathname] ?? "Not found · Compose Guard";
     if (hash) {
       document.getElementById(decodeURIComponent(hash.slice(1)))?.scrollIntoView();
     } else {

@@ -10,7 +10,7 @@ typecheck:
 	mypy src
 
 test:
-	pytest --cov=compose_doctor --cov-branch --cov-report=term-missing --cov-fail-under=90
+	pytest --cov=compose_guard --cov-branch --cov-report=term-missing --cov-fail-under=90
 
 check: lint typecheck test
 

@@ -1,4 +1,4 @@
-# Compose Doctor
+# Compose Guard
 
 Lint Docker Compose files for security, misconfiguration and reliability problems.
 

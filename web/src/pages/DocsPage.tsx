@@ -19,17 +19,17 @@ const SECTIONS = [
 ];
 
 const USAGE = `# Lint compose.yaml (or compose.yml, docker-compose.yaml, docker-compose.yml) in this directory
-compose-doctor
+compose-guard
 
 # Lint specific files, or standard input
-compose-doctor deploy/compose.yaml deploy/compose.prod.yaml
-cat compose.yaml | compose-doctor -
+compose-guard deploy/compose.yaml deploy/compose.prod.yaml
+cat compose.yaml | compose-guard -
 
 # Fail CI on warnings too, and write SARIF for code scanning
-compose-doctor --fail-on warning --format sarif > compose-doctor.sarif
+compose-guard --fail-on warning --format sarif > compose-guard.sarif
 
 # See every rule with its rationale and fix
-compose-doctor --list-rules`;
+compose-guard --list-rules`;
 
 // Two lines of real CLI output, taken from the generated snapshot rather than typed by hand.
 const TEXT_SAMPLE = (() => {
@@ -42,11 +42,11 @@ const SUPPRESSION_SAMPLE = `services:
   db:
     image: postgres:16.4
     ports:
-      # compose-doctor: ignore CD005 -- only reachable through the VPN
+      # compose-guard: ignore CD005 -- only reachable through the VPN
       - "10.8.0.1:5432:5432"
-    container_name: db  # compose-doctor: ignore CD015
+    container_name: db  # compose-guard: ignore CD015
 
-# compose-doctor: ignore-file CD010`;
+# compose-guard: ignore-file CD010`;
 
 const CONFIG_SAMPLE = `ignore: [CD015]          # ignore these rules everywhere
 services:
@@ -115,14 +115,14 @@ export function DocsPage() {
         <header className="mb-10">
           <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Getting started</h1>
           <p className="mt-4 text-lg leading-8 text-muted">
-            A short guide to Compose Doctor {ANALYZER_VERSION}. The <ExternalA href={REPO_LINKS.readme}>README</ExternalA>{" "}
+            A short guide to Compose Guard {ANALYZER_VERSION}. The <ExternalA href={REPO_LINKS.readme}>README</ExternalA>{" "}
             is the complete reference.
           </p>
         </header>
 
-        <Section id="overview" title="What Compose Doctor does">
+        <Section id="overview" title="What Compose Guard does">
           <p>
-            Compose Doctor reads Docker Compose files and reports security holes, misconfigurations and
+            Compose Guard reads Docker Compose files and reports security holes, misconfigurations and
             reliability problems, each with the exact line, the affected service and a concrete fix. It does
             not change your files, and it does not run Docker.
           </p>
@@ -135,17 +135,20 @@ export function DocsPage() {
 
         <Section id="install" title="Installation">
           <p>
-            Compose Doctor is not published on PyPI. Install it from a clone with Python 3.10 or newer:
+            From PyPI (Python 3.10 or newer):
           </p>
           <CodeBlock code={INSTALL_COMMANDS} prompt label="Terminal" />
-          <p>Or install straight from GitHub, for example in a CI job:</p>
+          <p>
+            Or clone the repository and run <code>pip install .</code>, or install straight from
+            GitHub in CI:
+          </p>
           <CodeBlock code={PIP_GIT_INSTALL} prompt />
         </Section>
 
         <Section id="usage" title="Analyze a Compose file">
           <CodeBlock code={USAGE} prompt label="Usage" />
           <p>
-            <code>python -m compose_doctor</code> works the same as <code>compose-doctor</code>. To try it
+            <code>python -m compose_guard</code> works the same as <code>compose-guard</code>. To try it
             without installing anything, use the <Link className="font-medium text-accent underline-offset-4 hover:underline" to="/playground">playground</Link>,
             which runs the same Python package in your browser.
           </p>
@@ -200,15 +203,15 @@ export function DocsPage() {
           </p>
           <CodeBlock code={SUPPRESSION_SAMPLE} label="compose.yaml" />
           <p>
-            A <code>.compose-doctor.yml</code> file in the current directory (or <code>--config PATH</code>)
+            A <code>.compose-guard.yml</code> file in the current directory (or <code>--config PATH</code>)
             sets global and per-service ignores, severity overrides and the default <code>fail_on</code>:
           </p>
-          <CodeBlock code={CONFIG_SAMPLE} label=".compose-doctor.yml" />
+          <CodeBlock code={CONFIG_SAMPLE} label=".compose-guard.yml" />
         </Section>
 
         <Section id="ci" title="CI usage">
           <p>Any CI system can use the exit code as a gate:</p>
-          <CodeBlock code="compose-doctor --fail-on warning" prompt />
+          <CodeBlock code="compose-guard --fail-on warning" prompt />
           <p>
             On GitHub, upload SARIF so findings appear as code scanning alerts on the lines they refer to. The{" "}
             <ExternalA href={`${REPO_LINKS.repo}#ci-usage`}>README's CI section</ExternalA> has a
@@ -218,7 +221,7 @@ export function DocsPage() {
 
         <Section id="rules" title="Rules">
           <p>
-            Generated from the analyzer's rule registry, the same source as <code>compose-doctor --list-rules</code>.
+            Generated from the analyzer's rule registry, the same source as <code>compose-guard --list-rules</code>.
           </p>
           <ul className="space-y-3">
             {RULE_DOCS.map((rule) => (

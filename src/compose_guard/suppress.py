@@ -1,9 +1,9 @@
 """Inline suppression comments.
 
-``# compose-doctor: ignore CD005`` (or ``ignore CD005,CD010``) suppresses those rules for findings
+``# compose-guard: ignore CD005`` (or ``ignore CD005,CD010``) suppresses those rules for findings
 on the same line. On a line of its own it also covers the line directly below.
-``# compose-doctor: ignore-file CD015`` anywhere suppresses a rule for the whole file.
-A reason can follow the IDs after ``--``: ``# compose-doctor: ignore CD005 -- bound by firewall``.
+``# compose-guard: ignore-file CD015`` anywhere suppresses a rule for the whole file.
+A reason can follow the IDs after ``--``: ``# compose-guard: ignore CD005 -- bound by firewall``.
 
 PyYAML discards comments, so they are found by scanning the raw text. A marker must start a
 comment: ``#`` at the start of a line or after whitespace.
@@ -15,10 +15,10 @@ import re
 from collections.abc import Collection
 from dataclasses import dataclass
 
-from compose_doctor.errors import InputError
+from compose_guard.errors import InputError
 
 _MARKER = re.compile(
-    r"(?:^|\s)#\s*compose-doctor:\s*(?P<kind>ignore-file|ignore)\b(?P<ids>[^#]*)", re.IGNORECASE
+    r"(?:^|\s)#\s*compose-guard:\s*(?P<kind>ignore-file|ignore)\b(?P<ids>[^#]*)", re.IGNORECASE
 )
 _ID_SEPARATOR = re.compile(r"[\s,]+")
 

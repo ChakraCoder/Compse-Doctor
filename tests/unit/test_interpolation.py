@@ -1,6 +1,6 @@
 import pytest
 
-from compose_doctor.interpolation import contains_interpolation
+from compose_guard.interpolation import contains_interpolation
 
 
 @pytest.mark.parametrize(

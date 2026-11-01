@@ -3,7 +3,7 @@ requires = ["hatchling>=1.27"]
 build-backend = "hatchling.build"
 
 [project]
-name = "compose-doctor"
+name = "compose-guard"
 dynamic = ["version"]
 description = "Lint Docker Compose files for security, misconfiguration and reliability problems."
 readme = "README.md"
@@ -12,7 +12,15 @@ license-files = ["LICENSE"]
 authors = [{ name = "Yagnang Vyas" }]
 requires-python = ">=3.10"
 dependencies = ["PyYAML>=6.0"]
-keywords = ["docker", "docker-compose", "linter", "security", "sarif"]
+keywords = [
+    "docker",
+    "docker-compose",
+    "compose",
+    "linter",
+    "security",
+    "sarif",
+    "static-analysis",
+]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Environment :: Console",
@@ -32,17 +40,21 @@ classifiers = [
 dev = ["pytest>=8", "pytest-cov>=5", "ruff>=0.6", "mypy>=1.11", "types-PyYAML>=6.0"]
 
 [project.scripts]
-compose-doctor = "compose_doctor.cli:main"
+compose-guard = "compose_guard.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/yagnang-vyas/compose-doctor"
-Issues = "https://github.com/yagnang-vyas/compose-doctor/issues"
+Homepage = "https://github.com/yagnang-vyas/compose-guard"
+Documentation = "https://github.com/yagnang-vyas/compose-guard#readme"
+Repository = "https://github.com/yagnang-vyas/compose-guard"
+Changelog = "https://github.com/yagnang-vyas/compose-guard/blob/main/CHANGELOG.md"
+Issues = "https://github.com/yagnang-vyas/compose-guard/issues"
+"Live demo" = "https://compose-guard.netlify.app/"
 
 [tool.hatch.version]
-path = "src/compose_doctor/__init__.py"
+path = "src/compose_guard/__init__.py"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/compose_doctor"]
+packages = ["src/compose_guard"]
 
 [tool.ruff]
 line-length = 100
@@ -62,7 +74,7 @@ addopts = "-ra"
 
 [tool.coverage.run]
 branch = true
-source = ["compose_doctor"]
+source = ["compose_guard"]
 
 [tool.coverage.report]
 show_missing = true

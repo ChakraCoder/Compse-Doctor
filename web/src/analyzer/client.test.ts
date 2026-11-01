@@ -7,7 +7,7 @@ import type { AnalysisResult } from "./types";
 const RESULT: AnalysisResult = {
   ok: false,
   exit_code: 2,
-  error: { message: "file is empty", line: 1, display: "compose-doctor: error: compose.yaml:1: file is empty" },
+  error: { message: "file is empty", line: 1, display: "compose-guard: error: compose.yaml:1: file is empty" },
 };
 
 /** A stand-in worker whose replies the test controls. */

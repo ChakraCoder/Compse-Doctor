@@ -10,16 +10,16 @@ from collections.abc import Sequence
 from pathlib import Path
 from typing import NoReturn, TextIO
 
-from compose_doctor import __version__
-from compose_doctor.config import DEFAULT_CONFIG_NAME, FAIL_ON_CHOICES, Config, load_config
-from compose_doctor.engine import lint
-from compose_doctor.errors import ComposeDoctorError, InputError
-from compose_doctor.loader import load_bytes
-from compose_doctor.model import ComposeFile
-from compose_doctor.report import FORMATS, render
-from compose_doctor.rules import RULES, RULES_BY_ID
+from compose_guard import __version__
+from compose_guard.config import DEFAULT_CONFIG_NAME, FAIL_ON_CHOICES, Config, load_config
+from compose_guard.engine import lint
+from compose_guard.errors import ComposeGuardError, InputError
+from compose_guard.loader import load_bytes
+from compose_guard.model import ComposeFile
+from compose_guard.report import FORMATS, render
+from compose_guard.rules import RULES, RULES_BY_ID
 
-PROG = "compose-doctor"
+PROG = "compose-guard"
 
 EXIT_OK = 0
 EXIT_FINDINGS = 1
@@ -104,8 +104,12 @@ def _discover(parser: argparse.ArgumentParser) -> list[str]:
 def _read(path: str, stdin: TextIO) -> ComposeFile:
     if path == "-":
         return load_bytes(stdin.buffer.read(), STDIN_NAME)
+    target = Path(path)
+    # Windows raises PermissionError for directories, not IsADirectoryError.
+    if target.is_dir():
+        raise InputError("is a directory", file=path)
     try:
-        data = Path(path).read_bytes()
+        data = target.read_bytes()
     except FileNotFoundError:
         raise InputError("no such file", file=path) from None
     except IsADirectoryError:
@@ -164,7 +168,7 @@ def _run(argv: Sequence[str] | None, stdout: TextIO, stdin: TextIO) -> int:
 def main(argv: Sequence[str] | None = None) -> int:
     try:
         return _run(argv, sys.stdout, sys.stdin)
-    except ComposeDoctorError as exc:
+    except ComposeGuardError as exc:
         sys.stderr.write(f"{PROG}: error: {exc}\n")
         return EXIT_USAGE
     except KeyboardInterrupt:

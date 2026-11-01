@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
-from compose_doctor.interpolation import contains_interpolation
-from compose_doctor.model import ComposeFile, Finding, Service, Severity
-from compose_doctor.rules.base import Rule, key, text
-from compose_doctor.rules.parsing import parse_image
+from compose_guard.interpolation import contains_interpolation
+from compose_guard.model import ComposeFile, Finding, Service, Severity
+from compose_guard.rules.base import Rule, key, text
+from compose_guard.rules.parsing import parse_image
 
 
 def check_unpinned_image(service: Service, compose: ComposeFile) -> list[Finding]:

@@ -14,9 +14,9 @@ import re
 from collections.abc import Iterator
 from dataclasses import dataclass
 
-from compose_doctor.interpolation import contains_interpolation
-from compose_doctor.model import Located, Value
-from compose_doctor.rules.base import mapping, sequence, text
+from compose_guard.interpolation import contains_interpolation
+from compose_guard.model import Located, Value
+from compose_guard.rules.base import mapping, sequence, text
 
 
 @dataclass(frozen=True)

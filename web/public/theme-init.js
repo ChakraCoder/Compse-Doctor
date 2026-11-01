@@ -2,7 +2,7 @@
 (function () {
   var theme = "system";
   try {
-    theme = localStorage.getItem("compose-doctor:theme") || "system";
+    theme = localStorage.getItem("compose-guard:theme") || "system";
   } catch (e) {
     // Storage can be unavailable (private mode, blocked site data).
   }

@@ -4,14 +4,14 @@ from pathlib import Path
 
 import pytest
 
-from compose_doctor.config import Config, load_config
-from compose_doctor.errors import InputError
-from compose_doctor.model import Severity
-from compose_doctor.rules import RULES_BY_ID
+from compose_guard.config import Config, load_config
+from compose_guard.errors import InputError
+from compose_guard.model import Severity
+from compose_guard.rules import RULES_BY_ID
 
 
 def write(tmp_path: Path, text: str) -> Path:
-    path = tmp_path / ".compose-doctor.yml"
+    path = tmp_path / ".compose-guard.yml"
     path.write_text(text, encoding="utf-8")
     return path
 

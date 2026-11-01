@@ -1,4 +1,4 @@
-// Shapes returned by bridge.py. They mirror Compose Doctor's JSON report (schema_version 1).
+// Shapes returned by bridge.py. They mirror Compose Guard's JSON report (schema_version 1).
 
 export type Severity = "error" | "warning" | "note";
 export type FailOn = Severity | "never";

@@ -14,8 +14,8 @@ import yaml
 from yaml.constructor import SafeConstructor
 from yaml.nodes import MappingNode, Node, ScalarNode, SequenceNode
 
-from compose_doctor.errors import InputError
-from compose_doctor.model import ComposeFile, Located, LocatedMap, Scalar, Service, Value
+from compose_guard.errors import InputError
+from compose_guard.model import ComposeFile, Located, LocatedMap, Scalar, Service, Value
 
 MAX_NODES = 100_000
 """Upper bound on values produced while converting one document (alias-bomb protection)."""

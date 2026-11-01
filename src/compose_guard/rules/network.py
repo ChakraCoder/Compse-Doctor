@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from compose_doctor.model import ComposeFile, Finding, Service, Severity
-from compose_doctor.rules.base import Rule, key, sequence, text
-from compose_doctor.rules.parsing import Port, is_loopback, parse_image, parse_port
+from compose_guard.model import ComposeFile, Finding, Service, Severity
+from compose_guard.rules.base import Rule, key, sequence, text
+from compose_guard.rules.parsing import Port, is_loopback, parse_image, parse_port
 
 # --- CD004 ---------------------------------------------------------------------------------
 
