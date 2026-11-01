@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from compose_doctor.engine import Report, Result, Suppression
-from compose_doctor.model import Finding, Severity
+from compose_guard.engine import Report, Result, Suppression
+from compose_guard.model import Finding, Severity
 
 _SUPPRESSION_LABELS = {Suppression.INLINE: "inline comment", Suppression.CONFIG: "configuration"}
 

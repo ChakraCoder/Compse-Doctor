@@ -39,7 +39,7 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-[1.4fr_repeat(3,1fr)]">
         <div className="max-w-xs">
           <div className="flex items-center gap-2.5 font-semibold tracking-tight">
-            <LogoMark className="size-6" /> Compose Doctor
+            <LogoMark className="size-6" /> Compose Guard
           </div>
           <p className="mt-3 text-sm leading-6 text-muted">
             An open-source linter for Docker Compose files. Version {ANALYZER_VERSION}, MIT licensed.

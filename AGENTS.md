@@ -1,4 +1,4 @@
-# Working on Compose Doctor
+# Working on Compose Guard
 
 These rules apply to every change, whether made by a person or an AI coding agent.
 

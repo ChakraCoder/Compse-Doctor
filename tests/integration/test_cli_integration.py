@@ -1,4 +1,4 @@
-"""Run the real CLI with ``python -m compose_doctor`` in a subprocess."""
+"""Run the real CLI with ``python -m compose_guard`` in a subprocess."""
 
 from __future__ import annotations
 
@@ -22,7 +22,7 @@ FAKE_SECRETS = ("fake-pass-123", "fake-token-xyz", "fake-user-abc")
 
 def cli(*args: str, cwd: Path = ROOT, stdin: str | None = None) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
-        [sys.executable, "-m", "compose_doctor", *args],
+        [sys.executable, "-m", "compose_guard", *args],
         cwd=cwd,
         input=stdin,
         capture_output=True,
@@ -156,10 +156,10 @@ def test_exit_0_and_1() -> None:
     [
         (["--format", "xml", INSECURE], "invalid choice: 'xml'"),
         (["--ignore", "CD123", INSECURE], "unknown rule ID(s) for --ignore: CD123"),
-        (["missing.yaml"], "compose-doctor: error: missing.yaml: no such file"),
+        (["missing.yaml"], "compose-guard: error: missing.yaml: no such file"),
         (
             ["tests/fixtures/privacy_broken.yaml"],
-            "compose-doctor: error: tests/fixtures/privacy_broken.yaml:11: invalid YAML",
+            "compose-guard: error: tests/fixtures/privacy_broken.yaml:11: invalid YAML",
         ),
         (["--config", "missing.yml", INSECURE], "missing.yml: config file not found"),
     ],
@@ -178,7 +178,7 @@ def test_exit_141_when_stdout_pipe_is_closed() -> None:
     os.close(read_end)  # the first write to the pipe fails with EPIPE
     try:
         process = subprocess.run(
-            [sys.executable, "-m", "compose_doctor", INSECURE],
+            [sys.executable, "-m", "compose_guard", INSECURE],
             cwd=ROOT,
             stdout=write_end,
             stderr=subprocess.PIPE,

@@ -1,13 +1,13 @@
-"""Exception types raised by Compose Doctor."""
+"""Exception types raised by Compose Guard."""
 
 from __future__ import annotations
 
 
-class ComposeDoctorError(Exception):
-    """Base class for all errors Compose Doctor reports to the user."""
+class ComposeGuardError(Exception):
+    """Base class for all errors Compose Guard reports to the user."""
 
 
-class InputError(ComposeDoctorError):
+class InputError(ComposeGuardError):
     """A problem with an input file or configuration.
 
     ``file`` and ``line`` locate the problem when known. ``str()`` renders the

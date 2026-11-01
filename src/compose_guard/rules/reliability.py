@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from enum import Enum
 
-from compose_doctor.model import ComposeFile, Finding, Located, Service, Severity
-from compose_doctor.rules.base import Rule, is_true, key, lookup, mapping, sequence, text
+from compose_guard.model import ComposeFile, Finding, Located, Service, Severity
+from compose_guard.rules.base import Rule, is_true, key, lookup, mapping, sequence, text
 
 
 class Health(Enum):

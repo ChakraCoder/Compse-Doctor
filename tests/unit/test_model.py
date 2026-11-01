@@ -2,7 +2,7 @@ import dataclasses
 
 import pytest
 
-from compose_doctor.model import Finding, Located, LocatedMap, Severity
+from compose_guard.model import Finding, Located, LocatedMap, Severity
 
 
 def test_severity_rank_order() -> None:

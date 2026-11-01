@@ -8,8 +8,8 @@ from pathlib import Path
 
 import pytest
 
-from compose_doctor import cli
-from compose_doctor.rules import RULES
+from compose_guard import cli
+from compose_guard.rules import RULES
 
 CLEAN = "services:\n  web:\n    image: nginx:1.27\n    restart: always\n    mem_limit: 64m\n"
 NOTE_ONLY = "services:\n  web:\n    image: nginx:1.27\n    restart: always\n"
@@ -57,7 +57,7 @@ def test_fail_on_from_config_and_cli_override(
     workdir: Path, capsys: pytest.CaptureFixture[str]
 ) -> None:
     (workdir / "c.yaml").write_text(WARNING)
-    (workdir / ".compose-doctor.yml").write_text("fail_on: warning\n")
+    (workdir / ".compose-guard.yml").write_text("fail_on: warning\n")
     assert run(capsys, "c.yaml")[0] == 1
     assert run(capsys, "c.yaml", "--fail-on", "error")[0] == 0
 
@@ -72,7 +72,7 @@ def test_explicit_config_path(workdir: Path, capsys: pytest.CaptureFixture[str])
 
 def test_cli_ignore_adds_to_config(workdir: Path, capsys: pytest.CaptureFixture[str]) -> None:
     (workdir / "c.yaml").write_text(ERROR.replace("nginx:1.27", "nginx"))
-    (workdir / ".compose-doctor.yml").write_text("ignore: [CD001]\n")
+    (workdir / ".compose-guard.yml").write_text("ignore: [CD001]\n")
     code, out, _ = run(capsys, "c.yaml", "--ignore", "cd002", "--ignore=CD010,")
     assert (code, out) == (0, "No problems found in 1 file (2 suppressed).\n")
 
@@ -130,14 +130,14 @@ def test_stdin_only_once(capsys: pytest.CaptureFixture[str]) -> None:
 @pytest.mark.parametrize(
     ("setup", "message"),
     [
-        (lambda d: None, "compose-doctor: error: missing.yaml: no such file\n"),
+        (lambda d: None, "compose-guard: error: missing.yaml: no such file\n"),
         (
             lambda d: (d / "missing.yaml").mkdir(),
-            "compose-doctor: error: missing.yaml: is a directory\n",
+            "compose-guard: error: missing.yaml: is a directory\n",
         ),
         (
             lambda d: (d / "missing.yaml").write_text("services:\n  web: [\n"),
-            "compose-doctor: error: missing.yaml:3: invalid YAML: ",
+            "compose-guard: error: missing.yaml:3: invalid YAML: ",
         ),
     ],
 )
@@ -162,15 +162,15 @@ def test_unreadable_file(
     monkeypatch.setattr(Path, "read_bytes", deny)
     code, _, err = run(capsys, "c.yaml")
     assert code == 2
-    assert err == "compose-doctor: error: c.yaml: cannot read file: Permission denied\n"
+    assert err == "compose-guard: error: c.yaml: cannot read file: Permission denied\n"
 
 
 def test_invalid_config_is_input_error(workdir: Path, capsys: pytest.CaptureFixture[str]) -> None:
     (workdir / "c.yaml").write_text(CLEAN)
-    (workdir / ".compose-doctor.yml").write_text("ignore: [CD999]\n")
+    (workdir / ".compose-guard.yml").write_text("ignore: [CD999]\n")
     code, _, err = run(capsys, "c.yaml")
     assert code == 2
-    assert err.startswith("compose-doctor: error: .compose-doctor.yml:1: unknown rule ID 'CD999'")
+    assert err.startswith("compose-guard: error: .compose-guard.yml:1: unknown rule ID 'CD999'")
 
 
 def test_keyboard_interrupt(

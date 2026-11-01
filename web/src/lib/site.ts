@@ -1,6 +1,6 @@
 // Project links and commands. Commands match the repository README.
 
-export const REPO_URL = "https://github.com/yagnang-vyas/compose-doctor";
+export const REPO_URL = "https://github.com/yagnang-vyas/compose-guard";
 export const REPO_LINKS = {
   repo: REPO_URL,
   readme: `${REPO_URL}#readme`,
@@ -18,12 +18,6 @@ export function repoFile(path: string): string {
   return `${REPO_URL}/blob/main/${path}`;
 }
 
-export const INSTALL_COMMANDS = [
-  `git clone ${REPO_URL}.git`,
-  "cd compose-doctor",
-  "python -m venv .venv && . .venv/bin/activate",
-  "pip install .",
-  "compose-doctor --version",
-].join("\n");
+export const INSTALL_COMMANDS = ["pip install compose-guard", "compose-guard --version"].join("\n");
 
 export const PIP_GIT_INSTALL = `pip install git+${REPO_URL}.git`;

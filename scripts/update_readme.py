@@ -1,7 +1,7 @@
 """Regenerate the README sections that come from running the CLI.
 
 The sample output and the rule table in README.md are produced by actually running
-``compose-doctor``, never typed by hand. Run this after changing rules or output::
+``compose-guard``, never typed by hand. Run this after changing rules or output::
 
     python scripts/update_readme.py          # rewrite README.md
     python scripts/update_readme.py --check  # exit 1 if README.md is out of date (used by tests)
@@ -23,7 +23,7 @@ RULE_HEADER = re.compile(r"^(CD\d{3})\s+(\w+)\s+(.+)$")
 
 def run_cli(*args: str, stdin: str | None = None) -> str:
     result = subprocess.run(
-        [sys.executable, "-m", "compose_doctor", *args],
+        [sys.executable, "-m", "compose_guard", *args],
         cwd=ROOT,
         input=stdin,
         capture_output=True,
@@ -31,7 +31,7 @@ def run_cli(*args: str, stdin: str | None = None) -> str:
         check=False,
     )
     if result.returncode not in (0, 1):
-        raise SystemExit(f"compose-doctor {' '.join(args)} failed:\n{result.stderr}")
+        raise SystemExit(f"compose-guard {' '.join(args)} failed:\n{result.stderr}")
     return result.stdout
 
 
@@ -66,18 +66,18 @@ def json_example() -> str:
     output = run_cli("-", "--format", "json", stdin=JSON_EXAMPLE_INPUT)
     return (
         f"```yaml\n{JSON_EXAMPLE_INPUT}```\n\n"
-        f"```console\n$ compose-doctor --format json - < compose.yaml\n{output.rstrip()}\n```"
+        f"```console\n$ compose-guard --format json - < compose.yaml\n{output.rstrip()}\n```"
     )
 
 
 SECTIONS = {
     "json-output": json_example,
     "insecure-output": lambda: code_block(
-        "compose-doctor examples/insecure/compose.yaml",
+        "compose-guard examples/insecure/compose.yaml",
         run_cli("examples/insecure/compose.yaml"),
     ),
     "hardened-output": lambda: code_block(
-        "compose-doctor examples/hardened/compose.yaml",
+        "compose-guard examples/hardened/compose.yaml",
         run_cli("examples/hardened/compose.yaml"),
     ),
     "rule-table": rule_table,

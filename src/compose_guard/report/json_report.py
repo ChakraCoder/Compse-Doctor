@@ -3,7 +3,7 @@
 ```
 {
   "schema_version": 1,
-  "tool": {"name": "compose-doctor", "version": "0.1.0"},
+  "tool": {"name": "compose-guard", "version": "0.1.0"},
   "files": ["compose.yaml"],
   "summary": {"error": 0, "warning": 0, "note": 0, "suppressed": 0},
   "findings": [{"rule_id", "severity", "file", "line", "column", "service", "message", "fix"}],
@@ -17,9 +17,9 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from compose_doctor import __version__
-from compose_doctor.engine import Report, Suppression
-from compose_doctor.model import Finding, Severity
+from compose_guard import __version__
+from compose_guard.engine import Report, Suppression
+from compose_guard.model import Finding, Severity
 
 SCHEMA_VERSION = 1
 
@@ -42,7 +42,7 @@ def _finding(finding: Finding) -> dict[str, Any]:
 def to_dict(report: Report, *, show_suppressed: bool = False) -> dict[str, Any]:
     data: dict[str, Any] = {
         "schema_version": SCHEMA_VERSION,
-        "tool": {"name": "compose-doctor", "version": __version__},
+        "tool": {"name": "compose-guard", "version": __version__},
         "files": list(report.files),
         "summary": {
             "error": report.count(Severity.ERROR),

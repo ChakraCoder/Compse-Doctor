@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Callable
 from dataclasses import dataclass
 
-from compose_doctor.model import ComposeFile, Finding, Located, LocatedMap, Service, Severity, Value
+from compose_guard.model import ComposeFile, Finding, Located, LocatedMap, Service, Severity, Value
 
 CheckFunction = Callable[[Service, ComposeFile], list[Finding]]
 

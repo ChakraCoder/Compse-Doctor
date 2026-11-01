@@ -1,6 +1,6 @@
 // @vitest-environment node
 // Runs the real analyzer in Pyodide (the same runtime the browser uses) and compares it with the
-// CLI's committed golden output, so the playground provably reports what `compose-doctor` reports.
+// CLI's committed golden output, so the playground provably reports what `compose-guard` reports.
 
 import { readFile } from "node:fs/promises";
 
@@ -52,7 +52,7 @@ describe("analyzer in Pyodide", () => {
     const result = analyzer.analyze("services:\n  web: [\n", "error");
     expect(result).toMatchObject({ ok: false, exit_code: 2, error: { line: 3 } });
     if (result.ok) return;
-    expect(result.error.display).toMatch(/^compose-doctor: error: compose\.yaml:3: invalid YAML/);
+    expect(result.error.display).toMatch(/^compose-guard: error: compose\.yaml:3: invalid YAML/);
   });
 
   it("rejects alias bombs instead of expanding them", () => {
@@ -73,7 +73,7 @@ describe("analyzer in Pyodide", () => {
       "    image: nginx:1.27",
       "    restart: always",
       "    mem_limit: 128m",
-      "    container_name: web  # compose-doctor: ignore CD015",
+      "    container_name: web  # compose-guard: ignore CD015",
       "",
     ].join("\n");
     const result = analyzer.analyze(source, "note");

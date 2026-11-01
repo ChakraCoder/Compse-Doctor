@@ -1,4 +1,4 @@
-# The same stack as examples/insecure, with every Compose Doctor finding fixed.
+# The same stack as examples/insecure, with every Compose Guard finding fixed.
 # Secrets come from an untracked .env file or Docker secrets; nothing sensitive is in this file.
 name: shop
 

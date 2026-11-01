@@ -7,10 +7,10 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from enum import Enum
 
-from compose_doctor.config import Config
-from compose_doctor.model import ComposeFile, Finding, Severity
-from compose_doctor.rules import RULES_BY_ID, run_rules, sort_key
-from compose_doctor.suppress import parse_suppressions
+from compose_guard.config import Config
+from compose_guard.model import ComposeFile, Finding, Severity
+from compose_guard.rules import RULES_BY_ID, run_rules, sort_key
+from compose_guard.suppress import parse_suppressions
 
 
 class Suppression(Enum):

@@ -4,9 +4,9 @@ import textwrap
 
 import pytest
 
-from compose_doctor.errors import InputError
-from compose_doctor.loader import MAX_NODES, load_bytes, load_text
-from compose_doctor.model import ComposeFile, Located, LocatedMap, Service, Value
+from compose_guard.errors import InputError
+from compose_guard.loader import MAX_NODES, load_bytes, load_text
+from compose_guard.model import ComposeFile, Located, LocatedMap, Service, Value
 
 
 def load(source: str) -> ComposeFile:

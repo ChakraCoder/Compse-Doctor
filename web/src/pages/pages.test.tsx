@@ -19,7 +19,7 @@ describe("HomePage", () => {
 
   it("labels the preview as real analyzer output", () => {
     renderAt(<HomePage />);
-    expect(screen.getByText(/Actual output of Compose Doctor/)).toBeInTheDocument();
+    expect(screen.getByText(/Actual output of Compose Guard/)).toBeInTheDocument();
   });
 });
 

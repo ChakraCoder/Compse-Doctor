@@ -1,4 +1,4 @@
-"""The ``.compose-doctor.yml`` configuration file.
+"""The ``.compose-guard.yml`` configuration file.
 
 ```yaml
 ignore: [CD015]
@@ -17,12 +17,12 @@ from collections.abc import Collection, Mapping
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from compose_doctor.errors import InputError
-from compose_doctor.loader import parse_mapping
-from compose_doctor.model import Located, LocatedMap, Severity, Value
-from compose_doctor.rules.base import mapping, sequence, text
+from compose_guard.errors import InputError
+from compose_guard.loader import parse_mapping
+from compose_guard.model import Located, LocatedMap, Severity, Value
+from compose_guard.rules.base import mapping, sequence, text
 
-DEFAULT_CONFIG_NAME = ".compose-doctor.yml"
+DEFAULT_CONFIG_NAME = ".compose-guard.yml"
 FAIL_ON_CHOICES = ("error", "warning", "note", "never")
 
 _TOP_LEVEL_KEYS = ("ignore", "services", "severity", "fail_on")

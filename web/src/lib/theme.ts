@@ -4,7 +4,7 @@ import { readStored, writeStored } from "./storage";
 
 export type ThemePreference = "system" | "light" | "dark";
 
-const STORAGE_KEY = "compose-doctor:theme";
+const STORAGE_KEY = "compose-guard:theme";
 const query = "(prefers-color-scheme: dark)";
 
 function apply(preference: ThemePreference): void {

@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from compose_doctor.model import ComposeFile, Finding
-from compose_doctor.rules import images, network, reliability, resources, security, validation
-from compose_doctor.rules.base import Rule
+from compose_guard.model import ComposeFile, Finding
+from compose_guard.rules import images, network, reliability, resources, security, validation
+from compose_guard.rules.base import Rule
 
 RULES: tuple[Rule, ...] = tuple(
     sorted(

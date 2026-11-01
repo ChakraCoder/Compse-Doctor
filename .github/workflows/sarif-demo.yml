@@ -1,4 +1,4 @@
-# Uploads Compose Doctor findings for the deliberately insecure example to GitHub code scanning.
+# Uploads Compose Guard findings for the deliberately insecure example to GitHub code scanning.
 # Manual only, so the example does not create permanent alerts on every push.
 name: SARIF demo
 
@@ -17,14 +17,14 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - name: Install Compose Doctor
+      - name: Install Compose Guard
         run: pip install .
       - name: Lint the insecure example
         run: >
-          compose-doctor examples/insecure/compose.yaml
-          --format sarif --fail-on never > compose-doctor.sarif
+          compose-guard examples/insecure/compose.yaml
+          --format sarif --fail-on never > compose-guard.sarif
       - name: Upload to code scanning
         uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: compose-doctor.sarif
-          category: compose-doctor
+          sarif_file: compose-guard.sarif
+          category: compose-guard

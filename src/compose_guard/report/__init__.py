@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from compose_doctor.engine import Report
-from compose_doctor.report import json_report, sarif, text
+from compose_guard.engine import Report
+from compose_guard.report import json_report, sarif, text
 
 FORMATS = ("text", "json", "sarif")
 

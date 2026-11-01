@@ -58,7 +58,7 @@ async function screenshot(page, name, fullPage = false) {
   if (shots) await page.screenshot({ path: join(shots, `${name}.png`), fullPage });
 }
 
-const analyzerReady = (page) => page.getByText(/^compose-doctor \d+\.\d+\.\d+$/).waitFor({ timeout: 90_000 });
+const analyzerReady = (page) => page.getByText(/^compose-guard \d+\.\d+\.\d+$/).waitFor({ timeout: 90_000 });
 const exampleSelect = (page) => page.getByLabel("Example configuration");
 
 async function reportJson(page) {
@@ -141,7 +141,7 @@ try {
     await exampleSelect(page).selectOption("malformed");
     const alert = page.getByRole("alert").filter({ hasText: "could not read this file" });
     await alert.waitFor();
-    assert.match(await alert.textContent(), /compose-doctor: error: compose\.yaml:6: invalid YAML/);
+    assert.match(await alert.textContent(), /compose-guard: error: compose\.yaml:6: invalid YAML/);
     await screenshot(page, "playground-error");
   });
 

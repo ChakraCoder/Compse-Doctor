@@ -7,8 +7,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-from compose_doctor.cli import build_parser
-from compose_doctor.rules import RULES
+from compose_guard.cli import build_parser
+from compose_guard.rules import RULES
 
 ROOT = Path(__file__).resolve().parents[2]
 README = (ROOT / "README.md").read_text(encoding="utf-8")

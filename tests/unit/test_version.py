@@ -3,8 +3,8 @@ import sys
 
 import pytest
 
-from compose_doctor import __version__
-from compose_doctor.cli import main
+from compose_guard import __version__
+from compose_guard.cli import main
 
 
 def test_version_constant() -> None:
@@ -15,18 +15,18 @@ def test_version_flag(capsys: pytest.CaptureFixture[str]) -> None:
     with pytest.raises(SystemExit) as exc:
         main(["--version"])
     assert exc.value.code == 0
-    assert capsys.readouterr().out.strip() == "compose-doctor 0.1.0"
+    assert capsys.readouterr().out.strip() == "compose-guard 0.1.0"
 
 
 def test_python_dash_m_version() -> None:
     result = subprocess.run(
-        [sys.executable, "-m", "compose_doctor", "--version"],
+        [sys.executable, "-m", "compose_guard", "--version"],
         capture_output=True,
         text=True,
         check=False,
     )
     assert result.returncode == 0
-    assert result.stdout.strip() == "compose-doctor 0.1.0"
+    assert result.stdout.strip() == "compose-guard 0.1.0"
 
 
 def test_main_module_entry_point(
@@ -34,9 +34,9 @@ def test_main_module_entry_point(
 ) -> None:
     import runpy
 
-    monkeypatch.setattr(sys, "argv", ["compose-doctor", "--version"])
+    monkeypatch.setattr(sys, "argv", ["compose-guard", "--version"])
     with pytest.raises(SystemExit) as exc:
-        runpy.run_module("compose_doctor", run_name="__main__")
+        runpy.run_module("compose_guard", run_name="__main__")
     assert exc.value.code == 0
     assert "0.1.0" in capsys.readouterr().out
 

@@ -3,7 +3,7 @@
 //   public/runtime/pyodide/           the Pyodide core, copied from node_modules/pyodide
 //   public/runtime/pyyaml.tar.gz      the PyYAML source distribution, pinned and hash-checked
 //
-// Compose Doctor's only dependency is PyYAML, and it works without its optional C extension, so
+// Compose Guard's only dependency is PyYAML, and it works without its optional C extension, so
 // the pure-Python sources from the sdist are all the runtime needs. Serving both from the site
 // itself keeps the playground working without any third-party CDN.
 

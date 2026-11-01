@@ -1,4 +1,4 @@
-# Compose Doctor — Specification
+# Compose Guard — Specification
 
 Version 0.1.0
 
@@ -16,7 +16,7 @@ reverse proxy, and who want a fast check in their editor loop and in CI.
 
 ## 3. Scope
 
-Compose Doctor reads one or more Compose files, runs a set of documented rules, and reports findings
+Compose Guard reads one or more Compose files, runs a set of documented rules, and reports findings
 with a rule ID, severity, file, line and a concrete fix. It produces Text, JSON and SARIF 2.1.0
 output, and its exit codes make it usable as a CI gate.
 
@@ -28,12 +28,12 @@ output, and its exit codes make it usable as a CI gate.
   treated as unknown.
 - Auto-fixing files.
 - Linting Dockerfiles or Kubernetes manifests.
-- Publishing to PyPI or the GitHub Marketplace.
+- Publishing to the GitHub Marketplace.
 
 ## 4. Interface
 
 ```
-compose-doctor [-h] [--version] [--format {text,json,sarif}] [--fail-on {error,warning,note,never}]
+compose-guard [-h] [--version] [--format {text,json,sarif}] [--fail-on {error,warning,note,never}]
                [--config PATH] [--ignore IDS] [--show-suppressed] [--list-rules]
                [FILE ...]
 ```
@@ -44,7 +44,7 @@ compose-doctor [-h] [--version] [--format {text,json,sarif}] [--fail-on {error,w
 - `--fail-on` (default `error`): exit 1 if any unsuppressed finding has that severity or worse.
 - `--ignore CD010,CD015`: add rule IDs to the ignore list from the config file.
 - `--list-rules`: print every rule's ID, severity, title and rationale, then exit 0.
-- Configuration: `.compose-doctor.yml` in the current directory, or `--config PATH`. CLI flags
+- Configuration: `.compose-guard.yml` in the current directory, or `--config PATH`. CLI flags
   override the config file.
 
 ### Exit codes
@@ -53,7 +53,7 @@ compose-doctor [-h] [--version] [--format {text,json,sarif}] [--fail-on {error,w
 |---|---|
 | 0 | No unsuppressed finding at or above `--fail-on` |
 | 1 | At least one such finding |
-| 2 | Usage or input error, reported on stderr as `compose-doctor: error: <file>:<line>: <message>` |
+| 2 | Usage or input error, reported on stderr as `compose-guard: error: <file>:<line>: <message>` |
 | 130 | Interrupted |
 | 141 | Output pipe closed early |
 
@@ -67,15 +67,15 @@ compose-doctor [-h] [--version] [--format {text,json,sarif}] [--fail-on {error,w
 | `model.py` | `Located[T]`, `Service`, `ComposeFile`, `Finding`, `Severity` |
 | `interpolation.py` | Detect `${VAR}` / `$VAR` (detection only) |
 | `rules/` | Rule registry and the rule implementations |
-| `suppress.py` | Inline `# compose-doctor: ignore ...` comments |
-| `config.py` | `.compose-doctor.yml` |
+| `suppress.py` | Inline `# compose-guard: ignore ...` comments |
+| `config.py` | `.compose-guard.yml` |
 | `report/` | Text, JSON and SARIF renderers |
 | `cli.py` | Argument parsing, file discovery, exit codes |
 
 ### 5.2 The loader
 
 PyYAML's `yaml.load` family discards source positions and, with unsafe loaders, can construct
-arbitrary Python objects. Compose Doctor instead calls `yaml.compose(text, Loader=yaml.SafeLoader)`,
+arbitrary Python objects. Compose Guard instead calls `yaml.compose(text, Loader=yaml.SafeLoader)`,
 which returns a node tree where every node carries a start mark, and converts the tree itself:
 
 - **Located values.** Every converted value is a `Located` holding the Python value and the
@@ -112,9 +112,9 @@ values from the document.
 
 ## 6. Acceptance criteria
 
-- [x] `pip install .` into a fresh virtual environment works, and `compose-doctor --version`
-      prints `compose-doctor 0.1.0`.
-- [x] `python -m compose_doctor` behaves the same as `compose-doctor`.
+- [x] `pip install .` into a fresh virtual environment works, and `compose-guard --version`
+      prints `compose-guard 0.1.0`.
+- [x] `python -m compose_guard` behaves the same as `compose-guard`.
 - [x] The loader reports correct 1-based lines for keys and list items, including values reached
       through aliases and merge keys.
 - [x] Merge keys follow YAML 1.1 precedence (explicit keys win; earlier merge-list entries win).
@@ -139,7 +139,7 @@ values from the document.
 
 - **Unit:** loader (lines, aliases, merge keys, alias bomb, every error), interpolation, port and
   image parsers, every rule's good and bad fixtures, suppressions and config.
-- **Integration:** the real CLI through `subprocess` with `sys.executable -m compose_doctor`:
+- **Integration:** the real CLI through `subprocess` with `sys.executable -m compose_guard`:
   golden JSON for the insecure example, zero findings for the hardened example, SARIF structure,
   file discovery, stdin, every exit code, and the secret privacy test.
 
@@ -154,7 +154,7 @@ values from the document.
 
 - No merging of override files and no interpolation; interpolated values are treated as unknown,
   so a secret supplied through `${VAR}` with a literal default is not flagged.
-- Comments are found by scanning raw text, so a `# compose-doctor:` marker inside a quoted
+- Comments are found by scanning raw text, so a `# compose-guard:` marker inside a quoted
   multi-line string would be read as a suppression.
 
 ## 10. Prior art
@@ -164,7 +164,7 @@ values from the document.
   are broad infrastructure-as-code scanners that include Compose checks.
 - `docker compose config` validates and renders a Compose file but does not lint it.
 
-Compose Doctor focuses only on Compose, stays small and dependency-light, and gives accurate line
+Compose Guard focuses only on Compose, stays small and dependency-light, and gives accurate line
 numbers, per-line suppressions and SARIF output.
 
 ## 11. Decisions
@@ -176,9 +176,13 @@ Judgment calls where the implementation brief was ambiguous or was overridden:
    repository is pushed there.
 2. **Milestone-0 CLI.** The scaffold milestone's CLI supports `--version` only; the full interface
    in §4 arrives with the CLI milestone.
-3. **Repository URL.** The repository lives at `yagnang-vyas/compose-doctor` (it was first
-   created as `yagnang-vyass/Compse-Doctor`), so project URLs, the CI badge and the SARIF
-   `informationUri` use that location instead of the brief's `ChakraCoder/compose-doctor`. The package and command are still `compose-doctor`.
+3. **Repository and package name.** The project was originally called Compose Doctor
+   (`compose-doctor` / `compose_doctor`). That name is already taken on PyPI by an unrelated
+   package, so the product was renamed to Compose Guard: PyPI/CLI `compose-guard`, import
+   `compose_guard`, config `.compose-guard.yml`, suppressions `# compose-guard: …`, and the
+   GitHub repository `yagnang-vyas/compose-guard`. Rule IDs `CD000`–`CD015` are kept so existing
+   fixtures, docs and any early suppressions stay stable; `CD` is treated as a Compose Diagnostic
+   code prefix, not a product name.
 4. **Duplicate keys.** PyYAML silently keeps the last of two identical keys. Docker Compose
    rejects such files, and a silently dropped value hides mistakes, so the loader raises an
    `InputError` at the second key.
@@ -209,10 +213,10 @@ Judgment calls where the implementation brief was ambiguous or was overridden:
 14. **YAML 1.1 sexagesimal ports.** An unquoted `22:22` is the integer 1342 in YAML 1.1. Port
     parsing reads the scalar's source text, so it is understood as `22:22`, as Docker Compose does.
 15. **Line-above suppressions** apply only when the comment is on a line of its own. A trailing
-    comment (`ports: # compose-doctor: ignore CD005`) covers its own line, not the next one, so a
+    comment (`ports: # compose-guard: ignore CD005`) covers its own line, not the next one, so a
     suppression never silently reaches further than it looks.
 16. **Suppression comments are validated.** An unknown rule ID or an empty ID list in a
-    `# compose-doctor:` comment is an input error (exit 2), like an unknown ID in the config file,
+    `# compose-guard:` comment is an input error (exit 2), like an unknown ID in the config file,
     so a typo cannot silently suppress nothing. A free-text reason may follow `--`.
 17. **JSON findings include `column`.** It is additive to the shape in the brief and matches the
     `line:column` in text output and `startColumn` in SARIF. With `--show-suppressed`, JSON also
@@ -221,7 +225,7 @@ Judgment calls where the implementation brief was ambiguous or was overridden:
     `--show-suppressed` is given, so code scanning shows them as dismissed. Standard input is
     reported with the URI `stdin`; a file outside the working directory gets an absolute `file://`
     URI.
-19. **An input error stops the run.** If any file cannot be read or parsed, Compose Doctor reports
+19. **An input error stops the run.** If any file cannot be read or parsed, Compose Guard reports
     that error and exits 2 without a partial report, so CI never treats an unparsed file as clean.
 20. **Exit 130** is tested in-process (a `KeyboardInterrupt` raised inside the run); delivering a
     real SIGINT to a subprocess at the right moment cannot be done deterministically.
@@ -230,3 +234,9 @@ Judgment calls where the implementation brief was ambiguous or was overridden:
     are stale, so the README cannot drift from the tool.
 22. **Examples landed with the CLI milestone,** one step earlier than the brief's plan, because the
     golden and SARIF integration tests in that milestone run against them.
+23. **Directory inputs on Windows.** `Path.read_bytes()` raises `PermissionError` for a directory
+    on Windows, not `IsADirectoryError`. The CLI checks `Path.is_dir()` first so the user always
+    sees `is a directory` on every platform.
+24. **PyPI publish.** Releases are published with GitHub Actions Trusted Publishing
+    (`.github/workflows/publish.yml`) when a GitHub Release is published, not with a long-lived
+    PyPI API token in repository secrets.

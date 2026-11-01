@@ -1,8 +1,8 @@
-from compose_doctor.errors import ComposeDoctorError, InputError
+from compose_guard.errors import ComposeGuardError, InputError
 
 
-def test_input_error_is_compose_doctor_error() -> None:
-    assert issubclass(InputError, ComposeDoctorError)
+def test_input_error_is_compose_guard_error() -> None:
+    assert issubclass(InputError, ComposeGuardError)
 
 
 def test_input_error_message_only() -> None:

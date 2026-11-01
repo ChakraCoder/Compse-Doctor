@@ -37,7 +37,7 @@ export type WorkerFactory = () => Worker;
 const defaultFactory: WorkerFactory = () =>
   new Worker(new URL("./analyzer.worker.ts", import.meta.url), {
     type: "module",
-    name: "compose-doctor-analyzer",
+    name: "compose-guard-analyzer",
   });
 
 export function byteLength(source: string): number {

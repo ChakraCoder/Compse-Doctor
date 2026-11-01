@@ -1,12 +1,13 @@
-# Compose Doctor
+# Compose Guard
 
-Compose Doctor lints Docker Compose files for security holes, misconfigurations and reliability
+Compose Guard lints Docker Compose files for security holes, misconfigurations and reliability
 problems before they reach production.
 
-[![CI](https://github.com/yagnang-vyas/compose-doctor/actions/workflows/ci.yml/badge.svg)](https://github.com/yagnang-vyas/compose-doctor/actions/workflows/ci.yml)
-[![Live demo](https://img.shields.io/badge/live%20demo-compose--doctor.netlify.app-0f766e)](https://compose-doctor.netlify.app/)
+[![CI](https://github.com/yagnang-vyas/compose-guard/actions/workflows/ci.yml/badge.svg)](https://github.com/yagnang-vyas/compose-guard/actions/workflows/ci.yml)
+[![Live demo](https://img.shields.io/badge/live%20demo-compose--guard.netlify.app-0f766e)](https://compose-guard.netlify.app/)
+[![PyPI](https://img.shields.io/pypi/v/compose-guard.svg)](https://pypi.org/project/compose-guard/)
 
-**[Try it in your browser →](https://compose-doctor.netlify.app/playground)** The playground runs
+**[Try it in your browser →](https://compose-guard.netlify.app/playground)** The playground runs
 this exact Python package with Pyodide, so you can lint a Compose file without installing
 anything. Your YAML never leaves the browser.
 
@@ -18,7 +19,7 @@ mounted into a container, plain-text passwords in `environment:`, no healthcheck
 policy. `docker compose config` happily accepts all of that, and nothing complains until a
 database is found by a scanner or a service stays down after a reboot.
 
-Compose Doctor reads your Compose files and tells you, with the exact line and a concrete fix,
+Compose Guard reads your Compose files and tells you, with the exact line and a concrete fix,
 what to change. It is small, has one dependency (PyYAML), and fits into CI as a gate or as a
 GitHub code scanning source.
 
@@ -32,7 +33,7 @@ GitHub code scanning source.
 - **Accurate line numbers**, including through YAML anchors, aliases and `<<` merge keys: a
   finding inherited from an `x-` block points at the line where the value is defined.
 - **Text, JSON and SARIF 2.1.0** output. SARIF findings show up in GitHub code scanning.
-- **Inline suppressions** (`# compose-doctor: ignore CD005`) and a **config file** with global and
+- **Inline suppressions** (`# compose-guard: ignore CD005`) and a **config file** with global and
   per-service ignores and severity overrides. Suppressed findings are counted, never lost.
 - **CI-friendly exit codes** with a configurable threshold (`--fail-on`).
 - **Never prints secrets.** Findings about environment variables name the key, never the value.
@@ -41,34 +42,41 @@ GitHub code scanning source.
 
 ## Installation
 
-Compose Doctor is not published on PyPI. Install it from a clone (Python 3.10 or newer):
+Python 3.10 or newer:
 
 ```console
-git clone https://github.com/yagnang-vyas/compose-doctor.git
-cd compose-doctor
+pip install compose-guard
+compose-guard --version
+```
+
+Or install from a clone:
+
+```console
+git clone https://github.com/yagnang-vyas/compose-guard.git
+cd compose-guard
 python -m venv .venv && . .venv/bin/activate
 pip install .
-compose-doctor --version
+compose-guard --version
 ```
 
 ## Quick start
 
 ```console
 # Lint compose.yaml (or compose.yml, docker-compose.yaml, docker-compose.yml) in this directory
-compose-doctor
+compose-guard
 
 # Lint specific files, or standard input
-compose-doctor deploy/compose.yaml deploy/compose.prod.yaml
-cat compose.yaml | compose-doctor -
+compose-guard deploy/compose.yaml deploy/compose.prod.yaml
+cat compose.yaml | compose-guard -
 
 # Fail CI on warnings too, and write SARIF for code scanning
-compose-doctor --fail-on warning --format sarif > compose-doctor.sarif
+compose-guard --fail-on warning --format sarif > compose-guard.sarif
 
 # See every rule with its rationale and fix
-compose-doctor --list-rules
+compose-guard --list-rules
 ```
 
-`python -m compose_doctor` works the same as `compose-doctor`.
+`python -m compose_guard` works the same as `compose-guard`.
 
 ## Sample output
 
@@ -78,7 +86,7 @@ triggers all 15 rules:
 
 <!-- generated:insecure-output -->
 ```console
-$ compose-doctor examples/insecure/compose.yaml
+$ compose-guard examples/insecure/compose.yaml
 examples/insecure/compose.yaml:6:3 warning CD007 [web] Service has no healthcheck although it publishes ports
     fix: Add a healthcheck that proves the service is serving, for example test: ["CMD-SHELL", "pg_isready -U app"] for PostgreSQL, with interval, timeout and retries.
 examples/insecure/compose.yaml:6:3 warning CD008 [web] Service has no restart policy
@@ -145,20 +153,20 @@ settings or host mounts.
 
 <!-- generated:hardened-output -->
 ```console
-$ compose-doctor examples/hardened/compose.yaml
+$ compose-guard examples/hardened/compose.yaml
 No problems found in 1 file.
 ```
 <!-- /generated:hardened-output -->
 
 ## Web playground
 
-Live at **[compose-doctor.netlify.app](https://compose-doctor.netlify.app/)**.
+Live at **[compose-guard.netlify.app](https://compose-guard.netlify.app/)**.
 [`web/`](web/) holds its source: a landing page and a browser playground that runs this exact
 Python package with Pyodide (WebAssembly). Your YAML stays in the browser. See [web/README.md](web/README.md) for the architecture and Netlify deployment.
 
 ## Rules
 
-Generated from `compose-doctor --list-rules`, which also prints each rule's fix.
+Generated from `compose-guard --list-rules`, which also prints each rule's fix.
 
 <!-- generated:rule-table -->
 | ID | Severity | Rule | Why it matters |
@@ -190,22 +198,22 @@ services:
   db:
     image: postgres:16.4
     ports:
-      # compose-doctor: ignore CD005 -- only reachable through the VPN
+      # compose-guard: ignore CD005 -- only reachable through the VPN
       - "10.8.0.1:5432:5432"
-    container_name: db  # compose-doctor: ignore CD015
+    container_name: db  # compose-guard: ignore CD015
 
-# compose-doctor: ignore-file CD010
+# compose-guard: ignore-file CD010
 ```
 
-- `# compose-doctor: ignore ID[,ID...]` suppresses those rules on its own line. When the comment
+- `# compose-guard: ignore ID[,ID...]` suppresses those rules on its own line. When the comment
   is on a line by itself it also covers the line directly below.
-- `# compose-doctor: ignore-file ID[,ID...]` anywhere suppresses those rules for the whole file.
+- `# compose-guard: ignore-file ID[,ID...]` anywhere suppresses those rules for the whole file.
 - Anything after `--` is a free-text reason. Unknown rule IDs are an error, so a typo cannot
   silently suppress nothing.
 
 ### Config file
 
-Compose Doctor reads `.compose-doctor.yml` from the current directory, or the file given with
+Compose Guard reads `.compose-guard.yml` from the current directory, or the file given with
 `--config PATH`:
 
 ```yaml
@@ -231,7 +239,7 @@ configuration).
 As a gate, any CI system only needs the exit code:
 
 ```console
-compose-doctor --fail-on warning
+compose-guard --fail-on warning
 ```
 
 On GitHub, upload SARIF so findings appear as code scanning alerts on the lines they refer to.
@@ -239,7 +247,7 @@ Code scanning must be enabled for the repository (Settings → Code security), a
 repositories need GitHub Advanced Security.
 
 ```yaml
-name: Compose Doctor
+name: Compose Guard
 on: [push, pull_request]
 
 permissions:
@@ -247,19 +255,19 @@ permissions:
   security-events: write
 
 jobs:
-  compose-doctor:
+  compose-guard:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - run: pip install git+https://github.com/yagnang-vyas/compose-doctor.git
-      - run: compose-doctor compose.yaml --format sarif --fail-on never > compose-doctor.sarif
+      - run: pip install compose-guard
+      - run: compose-guard compose.yaml --format sarif --fail-on never > compose-guard.sarif
       - uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: compose-doctor.sarif
-          category: compose-doctor
+          sarif_file: compose-guard.sarif
+          category: compose-guard
 ```
 
 This repository's own [SARIF demo workflow](.github/workflows/sarif-demo.yml) does the same for
@@ -283,11 +291,11 @@ services:
 ```
 
 ```console
-$ compose-doctor --format json - < compose.yaml
+$ compose-guard --format json - < compose.yaml
 {
   "schema_version": 1,
   "tool": {
-    "name": "compose-doctor",
+    "name": "compose-guard",
     "version": "0.1.0"
   },
   "files": [
@@ -337,7 +345,7 @@ $ compose-doctor --format json - < compose.yaml
 |---|---|
 | 0 | No unsuppressed finding at or above `--fail-on` (default `error`) |
 | 1 | At least one such finding |
-| 2 | Usage or input error: bad flag, missing file, YAML error, invalid config. The message goes to stderr as `compose-doctor: error: <file>:<line>: <message>` |
+| 2 | Usage or input error: bad flag, missing file, YAML error, invalid config. The message goes to stderr as `compose-guard: error: <file>:<line>: <message>` |
 | 130 | Interrupted (Ctrl-C) |
 | 141 | Output pipe closed early, for example by `\| head` |
 
@@ -348,9 +356,9 @@ $ compose-doctor --format json - < compose.yaml
 - `${VAR}` interpolation is detected but not resolved, and `.env` files are not read.
   Interpolated values are treated as unknown: an interpolated image tag is not called unpinned,
   an interpolated secret is not called hard-coded, and an interpolated host IP is not judged.
-- Compose Doctor only sees the Compose file. A healthcheck defined in an image's Dockerfile, or a
+- Compose Guard only sees the Compose file. A healthcheck defined in an image's Dockerfile, or a
   firewall in front of a published port, is invisible to it; suppress the finding with a reason.
-- Suppression comments are found by scanning the raw text, so a `# compose-doctor:` marker inside
+- Suppression comments are found by scanning the raw text, so a `# compose-guard:` marker inside
   a multi-line string would also be read as a suppression.
 - It does not lint Dockerfiles or Kubernetes manifests and does not fix files automatically.
 
@@ -362,7 +370,7 @@ $ compose-doctor --format json - < compose.yaml
   formats.
 - `docker compose config` validates and renders a Compose file but does not judge it.
 
-Compose Doctor focuses on Compose only and stays small and dependency-light, with accurate line
+Compose Guard focuses on Compose only and stays small and dependency-light, with accurate line
 numbers through anchors and merge keys, per-line suppressions and SARIF output.
 
 ## Development
@@ -381,6 +389,16 @@ make format    # apply formatting and safe lint fixes
 - `UPDATE_GOLDEN=1 pytest` regenerates `tests/golden/insecure.json`;
   `python scripts/update_readme.py` regenerates the sample output and rule table above. A test
   fails if either is stale.
+
+## Releasing
+
+1. Run `make check` and `python scripts/update_readme.py` (and
+   `python web/scripts/export_snapshot.py` if the rule catalogue changed).
+2. Update [CHANGELOG.md](CHANGELOG.md), bump `__version__` in `src/compose_guard/__init__.py`.
+3. Tag and publish a GitHub Release (`vX.Y.Z`). The [Publish](.github/workflows/publish.yml)
+   workflow builds the sdist/wheel and uploads to PyPI via Trusted Publishing.
+4. On PyPI, configure a Trusted Publisher for this repository (`compose-guard`, workflow
+   `publish.yml`, environment `pypi`) before the first release upload.
 
 ## Roadmap
 

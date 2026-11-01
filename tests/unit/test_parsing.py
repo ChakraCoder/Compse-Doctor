@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import pytest
 
-from compose_doctor.model import Located, LocatedMap, Value
-from compose_doctor.rules.parsing import (
+from compose_guard.model import Located, LocatedMap, Value
+from compose_guard.rules.parsing import (
     EnvVar,
     Invalid,
     Mount,

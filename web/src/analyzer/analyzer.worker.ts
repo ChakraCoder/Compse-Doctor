@@ -1,5 +1,5 @@
 /// <reference lib="webworker" />
-// Runs Compose Doctor inside Pyodide, off the main thread. The worker has no access to the page,
+// Runs Compose Guard inside Pyodide, off the main thread. The worker has no access to the page,
 // cookies or storage; the page terminates it if an analysis runs past its time limit.
 
 import { loadPyodide } from "pyodide";

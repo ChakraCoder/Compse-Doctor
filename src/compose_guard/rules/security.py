@@ -5,10 +5,10 @@ from __future__ import annotations
 import re
 from collections.abc import Iterator
 
-from compose_doctor.interpolation import contains_interpolation
-from compose_doctor.model import ComposeFile, Finding, Located, Service, Severity, Value
-from compose_doctor.rules.base import Rule, is_true, key, sequence, text
-from compose_doctor.rules.parsing import EnvVar, Mount, iter_environment, parse_volume
+from compose_guard.interpolation import contains_interpolation
+from compose_guard.model import ComposeFile, Finding, Located, Service, Severity, Value
+from compose_guard.rules.base import Rule, is_true, key, sequence, text
+from compose_guard.rules.parsing import EnvVar, Mount, iter_environment, parse_volume
 
 # --- CD002 ---------------------------------------------------------------------------------
 

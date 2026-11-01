@@ -11,13 +11,13 @@ import json
 from pathlib import Path
 from typing import Any
 
-from compose_doctor import __version__
-from compose_doctor.engine import Report, Result
-from compose_doctor.rules import RULES
-from compose_doctor.rules.base import Rule
+from compose_guard import __version__
+from compose_guard.engine import Report, Result
+from compose_guard.rules import RULES
+from compose_guard.rules.base import Rule
 
 SARIF_SCHEMA = "https://json.schemastore.org/sarif-2.1.0.json"
-INFORMATION_URI = "https://github.com/yagnang-vyas/compose-doctor"
+INFORMATION_URI = "https://github.com/yagnang-vyas/compose-guard"
 STDIN_URI = "stdin"
 
 _RULE_INDEX = {rule.id: index for index, rule in enumerate(RULES)}
@@ -79,7 +79,7 @@ def to_dict(report: Report) -> dict[str, Any]:
             {
                 "tool": {
                     "driver": {
-                        "name": "compose-doctor",
+                        "name": "compose-guard",
                         "version": __version__,
                         "informationUri": INFORMATION_URI,
                         "rules": [_rule(rule) for rule in RULES],

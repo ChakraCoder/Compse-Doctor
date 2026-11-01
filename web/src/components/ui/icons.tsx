@@ -9,7 +9,7 @@ export function GitHubIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-/** Compose Doctor mark: stacked service lines with a status dot. */
+/** Compose Guard mark: stacked service lines with a status dot. */
 export function LogoMark(props: SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 32 32" aria-hidden="true" {...props}>

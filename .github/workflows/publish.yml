@@ -1,0 +1,30 @@
+# Publish compose-guard to PyPI when a GitHub Release is published.
+# Requires a Trusted Publisher on https://pypi.org/manage/account/publishing/
+# for owner yagnang-vyas, repo compose-guard, workflow publish.yml, environment pypi.
+name: Publish
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    name: PyPI
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Build
+        run: |
+          python -m pip install --upgrade pip build
+          python -m build
+      - name: Publish
+        uses: pypa/gh-action-pypi-publish@release/v1
