@@ -43,8 +43,9 @@ describe("DocsPage", () => {
     }
   });
 
-  it("uses the repository URL in install commands", () => {
+  it("documents PyPI and GitHub install commands", () => {
     renderAt(<DocsPage />);
-    expect(screen.getAllByText(new RegExp(`git clone ${REPO_URL}\\.git`)).length).toBeGreaterThan(0);
+    expect(screen.getByText(/pip install compose-guard/)).toBeInTheDocument();
+    expect(screen.getByText(new RegExp(`pip install git\\+${REPO_URL}\\.git`))).toBeInTheDocument();
   });
 });
