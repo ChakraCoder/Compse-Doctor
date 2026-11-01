@@ -8,14 +8,14 @@ from compose_guard.cli import main
 
 
 def test_version_constant() -> None:
-    assert __version__ == "0.1.0"
+    assert __version__ == "0.1.1"
 
 
 def test_version_flag(capsys: pytest.CaptureFixture[str]) -> None:
     with pytest.raises(SystemExit) as exc:
         main(["--version"])
     assert exc.value.code == 0
-    assert capsys.readouterr().out.strip() == "compose-guard 0.1.0"
+    assert capsys.readouterr().out.strip() == f"compose-guard {__version__}"
 
 
 def test_python_dash_m_version() -> None:
@@ -26,7 +26,7 @@ def test_python_dash_m_version() -> None:
         check=False,
     )
     assert result.returncode == 0
-    assert result.stdout.strip() == "compose-guard 0.1.0"
+    assert result.stdout.strip() == f"compose-guard {__version__}"
 
 
 def test_main_module_entry_point(
@@ -38,7 +38,7 @@ def test_main_module_entry_point(
     with pytest.raises(SystemExit) as exc:
         runpy.run_module("compose_guard", run_name="__main__")
     assert exc.value.code == 0
-    assert "0.1.0" in capsys.readouterr().out
+    assert __version__ in capsys.readouterr().out
 
 
 def test_list_rules_returns_zero(capsys: pytest.CaptureFixture[str]) -> None:

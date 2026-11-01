@@ -6,6 +6,7 @@ from pathlib import Path
 
 import pytest
 
+from compose_guard import __version__
 from compose_guard.config import Config
 from compose_guard.engine import Report, Suppression, lint
 from compose_guard.loader import load_text
@@ -113,7 +114,7 @@ def test_text_two_files_plural() -> None:
 def test_json_report_shape() -> None:
     data = json.loads(render(report(), "json"))
     assert data["schema_version"] == 1
-    assert data["tool"] == {"name": "compose-guard", "version": "0.1.0"}
+    assert data["tool"] == {"name": "compose-guard", "version": __version__}
     assert data["files"] == ["compose.yaml"]
     assert data["summary"] == {"error": 1, "warning": 0, "note": 1, "suppressed": 2}
     assert data["findings"][0] == {

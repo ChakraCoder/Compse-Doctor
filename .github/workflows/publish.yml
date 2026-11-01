@@ -1,6 +1,7 @@
-# Publish compose-guard to PyPI when a GitHub Release is published.
+# Publish compose-guard to PyPI when a GitHub Release is published, or manually.
 # Requires a Trusted Publisher on https://pypi.org/manage/account/publishing/
 # for owner yagnang-vyas, repo compose-guard, workflow publish.yml, environment pypi.
+# Bump src/compose_guard/__init__.py before re-running: PyPI rejects the same version twice.
 name: Publish
 
 on:

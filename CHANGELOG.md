@@ -6,18 +6,22 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-11-01
+
 ### Changed
 
 - Renamed the project to **Compose Guard** for PyPI publication (`compose-doctor` was already
   taken by an unrelated package). Distribution/CLI `compose-guard`, import `compose_guard`,
   config `.compose-guard.yml`, suppressions `# compose-guard: …`, exception base
   `ComposeGuardError`, and repository/docs/UI branding. Rule IDs `CD000`–`CD015` are unchanged.
+- README links (including License) use absolute GitHub URLs so they work on the PyPI project page.
 
 ### Added
 
 - Web playground in `web/`: a landing page, docs, examples and an editor that runs the real
   `compose_guard` package in the browser with Pyodide, with Netlify configuration and CI.
-- GitHub Actions workflow that publishes to PyPI on a published GitHub Release (Trusted Publishing).
+- GitHub Actions workflow that publishes to PyPI on a published GitHub Release or manual
+  `workflow_dispatch` (Trusted Publishing).
 
 ## [0.1.0] - 2026-10-25
 
@@ -33,10 +37,11 @@ All notable changes to this project are documented here. The format follows
 - Text, JSON (`schema_version` 1) and SARIF 2.1.0 output.
 - Inline suppressions (`# compose-doctor: ignore ...`, `ignore-file`) and a `.compose-doctor.yml`
   config file with global and per-service ignores, severity overrides and `fail_on`
-  (renamed to Compose Guard in Unreleased).
+  (renamed to Compose Guard in 0.1.1).
 - CLI with default-file discovery, standard input, `--fail-on`, `--ignore`, `--show-suppressed`,
   `--list-rules` and documented exit codes.
 - Insecure and hardened example stacks, CI on Python 3.10–3.13, and a manually triggered SARIF
   upload workflow.
 
+[0.1.1]: https://github.com/yagnang-vyas/compose-guard/releases/tag/v0.1.1
 [0.1.0]: https://github.com/yagnang-vyas/compose-guard/releases/tag/v0.1.0

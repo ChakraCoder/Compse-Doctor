@@ -27,7 +27,7 @@ class FakeWorker extends EventTarget {
   }
 }
 
-const catalog = { version: "0.1.0", rules: [] };
+const catalog = { version: "0.1.1", rules: [] };
 
 function respondAll(request: WorkerRequest): WorkerResponse {
   return request.type === "init"
